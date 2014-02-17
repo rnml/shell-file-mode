@@ -82,12 +82,15 @@ the following commands.
   + `shell-file-split-block`: split the current block into two blocks
     at the cursor
 
-These keybindings can be installed in an arbitrary keymap by 
+These keybindings can be installed after an arbitrary key prefix in
+the `shell-file-mode` keymap by calling
 
-    (shell-file-define-minor-mode-keys KEY-PREFIX)
+    (shell-file-define-minor-mode-keys PREFIX)
 
-       KEY-PREFIX + b  -->  shell-file-bubble-block)
-       KEY-PREFIX + d  -->  shell-file-delete-block)
-       KEY-PREFIX + j  -->  shell-file-next-block)
-       KEY-PREFIX + k  -->  shell-file-prev-block)
-       KEY-PREFIX + s  -->  shell-file-split-block))
+which will install the following keybindings:
+
+    PREFIX + b  -->  shell-file-bubble-block
+    PREFIX + d  -->  shell-file-delete-block
+    PREFIX + j  -->  shell-file-next-block
+    PREFIX + k  -->  shell-file-prev-block
+    PREFIX + s  -->  shell-file-split-block
