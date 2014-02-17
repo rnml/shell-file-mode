@@ -2,10 +2,11 @@
 manages and runs shell scripts from within emacs rather than the
 command line.  The benefits of this approach include
 
-  * no context switching between emacs and the command line,
-  * separation of command output from the command itself, so 
-    your cursor stays editing the command, and
-  * structured logs of both command and output history
+  1. no context switching between emacs and the command line,
+  2. clean separation of input (code or data) and outputs, so your
+     cursor stays put on the input or other input, and
+  3. structured logs of both command and output history, for easy
+     searching later on.
 
 # The shell file #
 
