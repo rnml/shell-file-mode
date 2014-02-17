@@ -1,6 +1,7 @@
-# shell-file.el #
+`shell-file.el` defines elisp code for managing and running blocks of
+shell scripts from within emacs.
 
-A way to manage and run blocks of shell scripts from within emacs.
+# The shell file #
 
 The idea is that one has a file called a *shell file* containing
 blocks of shell script.  Here is an example shell file.
