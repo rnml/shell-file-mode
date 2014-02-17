@@ -1,15 +1,17 @@
-`shell-file.el` defines elisp code for managing and running blocks of
-shell scripts from within emacs.  The benefits of this way of working
-are
+`shell-file.el` defines elisp code supporting a workflow whereby one
+manages and runs shell scripts from within emacs rather than the
+command line.  The benefits of this approach include
 
-  * hello 
-  * there 
-  * mom 
+  * no context switching between emacs and the command line,
+  * separation of command output from the command itself, so 
+    your cursor stays editing the command, and
+  * structured logs of both command and output history
 
 # The shell file #
 
-The idea is that one has a file called a *shell file* containing
-blocks of shell script.  Here is an example shell file.
+The central feature of this way of working is a shell scrip called the
+*shell file* containing blocks of shell script.  Here is an example
+shell file:
 
     #!/bin/bash
     # -*- eval: (shell-file-mode t) -*-
@@ -34,7 +36,7 @@ blocks of shell script.  Here is an example shell file.
 
     exit ###############################################################
 
-Two sets of commands are defined by 
+The 
 
 # Global Keybindings #
 
