@@ -8,11 +8,14 @@ command line.  The benefits of this approach include
   3. structured logs of both command and output history, for easy
      searching later on.
 
+One thing all these points have in common is a more sophisticated 
+way of interacting with command line history. 
+
 # The shell file #
 
-The central feature of this way of working is a shell scrip called the
-*shell file* containing blocks of shell script.  Here is an example
-shell file:
+The central feature of this way of working is a shell script called
+the *shell file* containing blocks of code.  Here is an example shell
+file:
 
     #!/bin/bash
     # -*- eval: (shell-file-mode t) -*-
@@ -25,11 +28,6 @@ shell file:
 
     exit ###############################################################
 
-    cd ~/src/foo/
-    make
-
-    exit ###############################################################
-
     cd /home
     for user in *; do
       echo hello $user
@@ -37,7 +35,29 @@ shell file:
 
     exit ###############################################################
 
-The 
+    cd ~/src/foo/
+    make
+    ./main.exe | head
+
+    exit ###############################################################
+
+Running this script from the command line will always run the topmost
+block.  From within emacs, one runs the same (topmost) block using the
+`shell-file-run` command.  This can be done from any buffer.  If run
+in the shell file buffer itself, the block where the cursor is will be
+the one that is run, just after bubbling it up to become the new
+topmost block if it isn't already.
+
+The output for the command will pop up in a new buffer named
+"*shell-file.0.out*".  If a previous command is still running, it will
+likely be called "*shell-file.1.out*".  In general, the number in the
+output buffer name is the lowest one without any command still
+running.
+
+The `shell-file-find` command will jump to the shell file, creating a
+dummy one if it doesn't already exist.  The path of the shell file is 
+the value of the elisp variable `shell-file-path`, whose default value
+is `~/bin/shell-file.sh`.
 
 # Global Keybindings #
 
