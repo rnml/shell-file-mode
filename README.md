@@ -59,7 +59,7 @@ running.
 Keybindings for the commands described in this section can be
 installed in an arbitrary `KEYMAP` after a given `PREFIX` by calling
 
-    (shell-file-define-global-keys evil-leader--default-map "z")
+    (shell-file-define-global-keys KEYMAP PREFIX)
 
 The `shell-file-find` command (`PREFIX` + `f`) will jump to the shell
 file, creating a dummy one if it doesn't already exist.  The path of
