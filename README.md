@@ -1,5 +1,10 @@
 `shell-file.el` defines elisp code for managing and running blocks of
-shell scripts from within emacs.
+shell scripts from within emacs.  The benefits of this way of working
+are
+
+  * hello 
+  * there 
+  * mom 
 
 # The shell file #
 
