@@ -68,12 +68,26 @@ is `~/bin/shell-file.sh`.
          ("g" shell-file-insert-cd)
          ("r" shell-file-run))
 
-# Minor Mode Keybindings #
+# shell-file minor mode #
+
+A special minor mode called `shell-file-mode` is available with 
+the following commands.
+
+  + `shell-file-bubble-block`: bubble the current block up to become
+    topmost one.  If already at the topmost block, swap with the
+    second topmost one.
+  + `shell-file-delete-block`: delete the block at point
+  + `shell-file-next-block`: move the cursor to the next block
+  + `shell-file-prev-block`: move the cursor to the previos block
+  + `shell-file-split-block`: split the current block into two blocks
+    at the cursor
+
+These keybindings can be installed in an arbitrary keymap by 
 
     (shell-file-define-minor-mode-keys KEY-PREFIX)
 
-       KEY-PREFIX + b  shell-file-bubble-block)
-       KEY-PREFIX + d  shell-file-delete-block)
-       KEY-PREFIX + j  shell-file-next-block)
-       KEY-PREFIX + k  shell-file-prev-block)
-       KEY-PREFIX + s  shell-file-split-block))
+       KEY-PREFIX + b  -->  shell-file-bubble-block)
+       KEY-PREFIX + d  -->  shell-file-delete-block)
+       KEY-PREFIX + j  -->  shell-file-next-block)
+       KEY-PREFIX + k  -->  shell-file-prev-block)
+       KEY-PREFIX + s  -->  shell-file-split-block))
