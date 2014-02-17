@@ -11,7 +11,7 @@ command line.  The benefits of this approach include
 One thing all these points have in common is a more sophisticated 
 way of interacting with command line history. 
 
-# The shell file #
+## the shell file ##
 
 The central feature of this way of working is a shell script called
 the *shell file* containing blocks of code.  Here is an example shell
@@ -54,7 +54,7 @@ likely be called "*shell-file.1.out*".  In general, the number in the
 output buffer name is the lowest one without any command still
 running.
 
-# Global Keybindings #
+## global keybindings ##
 
 Keybindings for the followin commands are installed in an arbitrary
 `KEYMAP` after a given `PREFIX` by calling
@@ -78,7 +78,7 @@ Keybindings for the followin commands are installed in an arbitrary
     `shell-file-insert`, but inserts the command `cd DIR` where `DIR`
     is the current working directory of the file being visited.
 
-# shell-file minor mode #
+## shell-file minor mode ##
 
 A special minor mode called `shell-file-mode` is available with 
 the following commands.
