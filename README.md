@@ -54,19 +54,28 @@ likely be called "*shell-file.1.out*".  In general, the number in the
 output buffer name is the lowest one without any command still
 running.
 
-The `shell-file-find` command will jump to the shell file, creating a
-dummy one if it doesn't already exist.  The path of the shell file is 
-the value of the elisp variable `shell-file-path`, whose default value
-is `~/bin/shell-file.sh`.
-
 # Global Keybindings #
+
+Keybindings for the commands described in this section can be
+installed in an arbitrary `KEYMAP` after a given `PREFIX` by calling
 
     (shell-file-define-global-keys evil-leader--default-map "z")
 
-       '(("f" shell-file-find)
-         ("i" shell-file-insert-block)
-         ("g" shell-file-insert-cd)
-         ("r" shell-file-run))
+The `shell-file-find` command (`PREFIX` + `f`) will jump to the shell
+file, creating a dummy one if it doesn't already exist.  The path of
+the shell file is the value of the elisp variable `shell-file-path`,
+whose default value is `~/bin/shell-file.sh`.
+
+The `shell-file-run` command (`PREFIX` + `r`) has been discussed
+already in the previous section.
+
+The `shell-file-insert-block` command (`PREFIX` + `i`) adds a new block to
+the top of the shell file.  If any text is highlighted, it will be
+copied into this new block.  Otherwise the new block is empty.
+
+The `shell-file-insert-cd` command (`PREFIX` + `g`) does the same as
+`shell-file-insert`, but inserts the command `cd DIR` where `DIR` is
+the current working directory of the file being visited.
 
 # shell-file minor mode #
 
