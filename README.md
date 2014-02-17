@@ -73,24 +73,16 @@ is `~/bin/shell-file.sh`.
 A special minor mode called `shell-file-mode` is available with 
 the following commands.
 
-  + `shell-file-bubble-block` (`PREFIX + b`) -- bubble the current block up to become
+  + `shell-file-bubble-block` (key = `PREFIX + b`) -- bubble the current block up to become
     topmost one.  If already at the topmost block, swap with the
     second topmost one.
-  + `shell-file-delete-block` (`PREFIX + d`) -- delete the block at point
-  + `shell-file-next-block` (`PREFIX + j`) -- move the cursor to the next block
-  + `shell-file-prev-block` (`PREFIX + k`) -- move the cursor to the previos block
-  + `shell-file-split-block` (`PREFIX + s`) -- split the current block into two blocks
+  + `shell-file-delete-block` (key = `PREFIX + d`) -- delete the block at point
+  + `shell-file-next-block` (key = `PREFIX + j`) -- move the cursor to the next block
+  + `shell-file-prev-block` (key = `PREFIX + k`) -- move the cursor to the previos block
+  + `shell-file-split-block` (key = `PREFIX + s`) -- split the current block into two blocks
     at the cursor
 
 These keybindings can be installed after an arbitrary key prefix in
 the `shell-file-mode` keymap by calling
 
     (shell-file-define-minor-mode-keys PREFIX)
-
-which will install the following keybindings:
-
-    PREFIX + b  -->  shell-file-bubble-block
-    PREFIX + d  -->  shell-file-delete-block
-    PREFIX + j  -->  shell-file-next-block
-    PREFIX + k  -->  shell-file-prev-block
-    PREFIX + s  -->  shell-file-split-block
