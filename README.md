@@ -49,8 +49,8 @@ the one that is run, just after bubbling it up to become the new
 topmost block if it isn't already.
 
 The output for the command will pop up in a new buffer named
-"*shell-file.0.out*".  If a previous command is still running, it will
-likely be called "*shell-file.1.out*".  In general, the number in the
+`*shell-file.0.out*`.  If a previous command is still running, it will
+likely be called `*shell-file.1.out*`.  In general, the number in the
 output buffer name is the lowest one without any command still
 running.
 
