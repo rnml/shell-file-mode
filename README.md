@@ -56,7 +56,7 @@ running.
 
 ## global keybindings ##
 
-Keybindings for the followin commands are installed in an arbitrary
+Keybindings for the following commands are installed in an arbitrary
 `KEYMAP` after a given `PREFIX` by calling
 `(shell-file-define-global-keys KEYMAP PREFIX)`:
 
@@ -88,7 +88,7 @@ the following commands.
     second topmost one.
   + `shell-file-delete-block` (`PREFIX` + `d`) -- delete the block at point
   + `shell-file-next-block` (`PREFIX` + `j`) -- move the cursor to the next block
-  + `shell-file-prev-block` (`PREFIX` + `k`) -- move the cursor to the previos block
+  + `shell-file-prev-block` (`PREFIX` + `k`) -- move the cursor to the previous block
   + `shell-file-split-block` (`PREFIX` + `s`) -- split the current block into two blocks
     at the cursor
 
