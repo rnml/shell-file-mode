@@ -4,7 +4,7 @@ command line.  The benefits of this approach include
 
   1. no context switching between emacs and the command line,
   2. clean separation of input (code or data) and outputs, so your
-     cursor stays put on the input or other input, and
+     cursor stays put in the code or other input, and
   3. structured logs of both command and output history, for easy
      searching later on.
 
