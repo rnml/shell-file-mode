@@ -83,14 +83,17 @@ Keybindings for the following commands are installed in an arbitrary
 A special minor mode called `shell-file-mode` is available with 
 the following commands.
 
-  + `shell-file-bubble-block` (`PREFIX` + `b`) -- bubble the current block up to become
-    topmost one.  If already at the topmost block, swap with the
-    second topmost one.
-  + `shell-file-delete-block` (`PREFIX` + `d`) -- delete the block at point
-  + `shell-file-next-block` (`PREFIX` + `j`) -- move the cursor to the next block
-  + `shell-file-prev-block` (`PREFIX` + `k`) -- move the cursor to the previous block
-  + `shell-file-split-block` (`PREFIX` + `s`) -- split the current block into two blocks
-    at the cursor
+  + `shell-file-bubble-block` (`PREFIX` + `b`) -- bubble the current
+    block up to become topmost one.  If already at the topmost block,
+    swap with the second topmost one.
+  + `shell-file-delete-block` (`PREFIX` + `d`) -- delete the block at
+    point
+  + `shell-file-next-block` (`PREFIX` + `j`) -- move the cursor to the
+    next block
+  + `shell-file-prev-block` (`PREFIX` + `k`) -- move the cursor to the
+    previous block
+  + `shell-file-split-block` (`PREFIX` + `s`) -- split the current
+    block into two blocks at the cursor
 
 These keybindings can be installed after an arbitrary key prefix in
 the `shell-file-mode` keymap by calling
