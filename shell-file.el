@@ -1,3 +1,5 @@
+;; TODO more documentation
+
 (defcustom shell-file-path "~/bin/shell-file.sh"
   "Path to the shell-file collection of shell scripts")
 
@@ -65,6 +67,12 @@ exit ###############################################################
 (defun shell-file-insert-block (&optional block-text)
   "insert a new shell block on top of the shell-file"
   (interactive)
+  (unless block-text
+    (when (evil-visual-state-p)
+      (setq block-text
+            (buffer-substring-no-properties
+             (region-beginning) (region-end)))
+      (evil-normal-state)))
   (let* ((init-line (shell-file-init-line))
          (exit-line (shell-file-exit-line)))
     (shell-file-find)
@@ -81,6 +89,16 @@ exit ###############################################################
   (let* ((dir default-directory))
     (shell-file-insert-block (concat "cd " dir))))
 
+(defun shell-file-insert-file ()
+  "insert a new shell block on top of the shell-file"
+  (interactive)
+  (let* ((dir default-directory)
+         (file
+          (file-name-nondirectory
+           (if (eq major-mode 'dired-mode) (dired-filename-at-point)
+             (buffer-file-name)))))
+    (shell-file-insert-block (concat "cd " dir "\n./" file))))
+
 (defun shell-file-delete-block (num-times)
   "delete a shell block off the top of the shell-file"
   (interactive "p")
@@ -88,7 +106,7 @@ exit ###############################################################
          (exit-line (shell-file-exit-line)))
     (dotimes (_ num-times)
       (when (not (search-backward exit-line nil t)) (search-backward init-line))
-      (forward-line)
+      (next-line)
       (let ((beg (point)))
         (search-forward exit-line)
         (delete-region beg (point)))
@@ -114,7 +132,7 @@ exit ###############################################################
           (progn
             (search-forward exit-line)
             (search-backward exit-line))))
-      (forward-line)
+      (next-line)
       (let ((beg (point)))
         (search-forward exit-line)
         (kill-region beg (point)))
@@ -123,7 +141,7 @@ exit ###############################################################
       (yank)
       (goto-line 1)
       (search-forward init-line)
-      (forward-line 1))))
+      (next-line 1))))
 
 (defun shell-file-next-block (num-times)
   "move one block down in the shell-file"
@@ -133,10 +151,10 @@ exit ###############################################################
     (dotimes (_ num-times)
       (cond
        ((search-backward exit-line nil t) (search-forward exit-line) (search-forward exit-line))
-       ((search-backward init-line nil t) (forward-line) (search-forward exit-line))
+       ((search-backward init-line nil t) (next-line) (search-forward exit-line))
        (t (search-forward init-line))
        )
-      (forward-line))))
+      (next-line))))
 
 (defun shell-file-prev-block (num-times)
   "move one block up in the shell-file"
@@ -147,9 +165,9 @@ exit ###############################################################
       (cond
        ((not (search-backward exit-line nil t)) (search-backward init-line))
        ((search-backward exit-line nil t) (search-forward exit-line))
-       (t (search-backward init-line) (forward-line))
+       (t (search-backward init-line) (next-line))
        )
-      (forward-line))))
+      (next-line))))
 
 (defun shell-file-current-buffer-is-block-buffer ()
   (let* ((cur-buf (current-buffer))
@@ -203,6 +221,7 @@ exit ###############################################################
       (binding
        '(("f" shell-file-find)
          ("i" shell-file-insert-block)
+         ("x" shell-file-insert-file)
          ("g" shell-file-insert-cd)
          ("r" shell-file-run)))
     (let* ((key (car binding))
@@ -222,4 +241,5 @@ exit ###############################################################
     (let* ((key (car binding))
            (key (concat key-prefix key))
            (def (cadr binding)))
-      (define-key shell-file-mode-map key def))))
+      (dolist (state (list 'normal 'motion))
+        (evil-define-key state shell-file-mode-map key def)))))
