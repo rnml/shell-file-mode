@@ -207,7 +207,8 @@ exit ###############################################################
             (search-forward-regexp (shell-file-exit-line))
             (write-region (point-min) (match-end 0) cmd))))
        ;; execute block
-       (_ (chmod cmd (file-modes-symbolic-to-number "u+x" (file-modes cmd))))
+       (_ (chmod cmd
+                 (file-modes-symbolic-to-number "u+x" (file-modes cmd))))
        (cmd (format "%s 2>&1 | tee %s" cmd out))
        (buf (save-window-excursion (shell-file-output)))
        (_ (async-shell-command cmd buf))
