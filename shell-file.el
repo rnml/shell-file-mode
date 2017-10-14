@@ -68,7 +68,7 @@ exit ###############################################################
   "insert a new shell block on top of the shell-file"
   (interactive)
   (unless block-text
-    (when (evil-visual-state-p)
+    (when (and (featurep 'evil) (evil-visual-state-p))
       (setq block-text
             (buffer-substring-no-properties
              (region-beginning) (region-end)))
@@ -220,27 +220,36 @@ exit ###############################################################
   "add shell-file keybindings that should be available globally"
   (dolist
       (binding
-       '(("f" shell-file-find)
-         ("i" shell-file-insert-block)
-         ("x" shell-file-insert-file)
-         ("g" shell-file-insert-cd)
-         ("r" shell-file-run)))
-    (let* ((key (car binding))
-           (key (concat key-prefix key))
-           (def (cadr binding)))
-      (define-key map key def))))
+       '((shell-file-find "f" "\C-f")
+         (shell-file-insert-block "i" "\C-i")
+         (shell-file-insert-file "x" "\C-x")
+         (shell-file-insert-cd "g" "\C-g")
+         (shell-file-run "r" "\C-r")))
+    (let* ((def (car binding))
+           (keys (cdr binding)))
+      (dolist (key keys)
+        (define-key map (concat key-prefix key) def)))))
+
+(defun define-shell-file-mode-key (key-prefix key def)
+  (let ((key (concat key-prefix key)))
+    (if (featurep 'evil)
+        (dolist (state (list 'normal 'motion))
+          (evil-define-key state shell-file-mode-map key def))
+      (define-key shell-file-mode-map key def))))
 
 (defun shell-file-define-minor-mode-keys (key-prefix)
   "add shell-file keybindings that should be available in shell-file-mode"
   (dolist
       (binding
-       '(("b" shell-file-bubble-block)
-         ("d" shell-file-delete-block)
-         ("j" shell-file-next-block)
-         ("k" shell-file-prev-block)
-         ("s" shell-file-split-block)))
-    (let* ((key (car binding))
-           (key (concat key-prefix key))
-           (def (cadr binding)))
-      (dolist (state (list 'normal 'motion))
-        (evil-define-key state shell-file-mode-map key def)))))
+       '((shell-file-bubble-block "b" "\C-b")
+         (shell-file-delete-block "d" "\C-d")
+         (shell-file-next-block "j" "n" "\C-j" "\C-n")
+         (shell-file-prev-block "k" "p" "\C-k" "\C-p")
+         (shell-file-split-block "s" "\C-s")))
+    (let* ((def (car binding))
+           (keys (cdr binding)))
+      (dolist (key keys)
+        (define-shell-file-mode-key key-prefix key def)))))
+
+(provide 'shell-file)
+;;; shell-file ends here
