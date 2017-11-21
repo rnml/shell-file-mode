@@ -83,11 +83,15 @@ exit ###############################################################
     (when block-text (insert block-text)))
   )
 
+(defun shell-file-cd-command (dir)
+  "the cd command inserted into shell-file.sh"
+  (concat "cd " dir))
+
 (defun shell-file-insert-cd ()
   "insert a new shell block on top of the shell-file"
   (interactive)
   (let* ((dir default-directory))
-    (shell-file-insert-block (concat "cd " dir))))
+    (shell-file-insert-block (shell-file-cd-command dir))))
 
 (defun shell-file-insert-file ()
   "insert a new shell block on top of the shell-file"
@@ -97,7 +101,7 @@ exit ###############################################################
           (file-name-nondirectory
            (if (eq major-mode 'dired-mode) (dired-filename-at-point)
              (buffer-file-name)))))
-    (shell-file-insert-block (concat "cd " dir "\n./" file))))
+    (shell-file-insert-block (concat (shell-file-cd-command dir) "\n./" file))))
 
 (defun shell-file-delete-block (num-times)
   "delete a shell block off the top of the shell-file"
