@@ -139,6 +139,7 @@ exit ###############################################################
       (next-line)
       (let ((beg (point)))
         (search-forward exit-line)
+        (setq last-command nil)  ; Don't append to the previous kill.
         (kill-region beg (point)))
       (goto-line 1)
       (search-forward init-line)
