@@ -68,7 +68,7 @@ exit ###############################################################
   "insert a new shell block on top of the shell-file"
   (interactive)
   (unless block-text
-    (when (evil-visual-state-p)
+    (when (and (featurep 'evil) (evil-visual-state-p))
       (setq block-text
             (buffer-substring-no-properties
              (region-beginning) (region-end)))
@@ -83,11 +83,15 @@ exit ###############################################################
     (when block-text (insert block-text)))
   )
 
+(defun shell-file-cd-command (dir)
+  "the cd command inserted into shell-file.sh"
+  (concat "cd " dir))
+
 (defun shell-file-insert-cd ()
   "insert a new shell block on top of the shell-file"
   (interactive)
   (let* ((dir default-directory))
-    (shell-file-insert-block (concat "cd " dir))))
+    (shell-file-insert-block (shell-file-cd-command dir))))
 
 (defun shell-file-insert-file ()
   "insert a new shell block on top of the shell-file"
@@ -97,7 +101,7 @@ exit ###############################################################
           (file-name-nondirectory
            (if (eq major-mode 'dired-mode) (dired-filename-at-point)
              (buffer-file-name)))))
-    (shell-file-insert-block (concat "cd " dir "\n./" file))))
+    (shell-file-insert-block (concat (shell-file-cd-command dir) "\n./" file))))
 
 (defun shell-file-delete-block (num-times)
   "delete a shell block off the top of the shell-file"
@@ -135,6 +139,7 @@ exit ###############################################################
       (next-line)
       (let ((beg (point)))
         (search-forward exit-line)
+        (setq last-command nil)  ; Don't append to the previous kill.
         (kill-region beg (point)))
       (goto-line 1)
       (search-forward init-line)
@@ -220,27 +225,36 @@ exit ###############################################################
   "add shell-file keybindings that should be available globally"
   (dolist
       (binding
-       '(("f" shell-file-find)
-         ("i" shell-file-insert-block)
-         ("x" shell-file-insert-file)
-         ("g" shell-file-insert-cd)
-         ("r" shell-file-run)))
-    (let* ((key (car binding))
-           (key (concat key-prefix key))
-           (def (cadr binding)))
-      (define-key map key def))))
+       '((shell-file-find "f" "\C-f")
+         (shell-file-insert-block "i" "\C-i")
+         (shell-file-insert-file "x" "\C-x")
+         (shell-file-insert-cd "g" "\C-g")
+         (shell-file-run "r" "\C-r")))
+    (let* ((def (car binding))
+           (keys (cdr binding)))
+      (dolist (key keys)
+        (define-key map (concat key-prefix key) def)))))
+
+(defun define-shell-file-mode-key (key-prefix key def)
+  (let ((key (concat key-prefix key)))
+    (if (featurep 'evil)
+        (dolist (state (list 'normal 'motion))
+          (evil-define-key state shell-file-mode-map key def))
+      (define-key shell-file-mode-map key def))))
 
 (defun shell-file-define-minor-mode-keys (key-prefix)
   "add shell-file keybindings that should be available in shell-file-mode"
   (dolist
       (binding
-       '(("b" shell-file-bubble-block)
-         ("d" shell-file-delete-block)
-         ("j" shell-file-next-block)
-         ("k" shell-file-prev-block)
-         ("s" shell-file-split-block)))
-    (let* ((key (car binding))
-           (key (concat key-prefix key))
-           (def (cadr binding)))
-      (dolist (state (list 'normal 'motion))
-        (evil-define-key state shell-file-mode-map key def)))))
+       '((shell-file-bubble-block "b" "\C-b")
+         (shell-file-delete-block "d" "\C-d")
+         (shell-file-next-block "j" "n" "\C-j" "\C-n")
+         (shell-file-prev-block "k" "p" "\C-k" "\C-p")
+         (shell-file-split-block "s" "\C-s")))
+    (let* ((def (car binding))
+           (keys (cdr binding)))
+      (dolist (key keys)
+        (define-shell-file-mode-key key-prefix key def)))))
+
+(provide 'shell-file)
+;;; shell-file ends here
